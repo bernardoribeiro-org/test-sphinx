@@ -52,7 +52,15 @@
 
 <div class="viewcode-block" id="DogList"><a class="viewcode-back" href="../../../backend/app.api.dog.html#app.api.dog.DogList">[docs]</a><span class="nd">@dog_api</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">DogList</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;defines Dog list endpoint&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;_summary_</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        Resource (class): flask-restx Resource class</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        response (class): Http response with list of dogs</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="DogList.get"><a class="viewcode-back" href="../../../backend/app.api.dog.html#app.api.dog.DogList.get">[docs]</a>    <span class="nd">@dog_api</span><span class="o">.</span><span class="n">doc</span><span class="p">(</span><span class="s2">&quot;list_dogs&quot;</span><span class="p">)</span>
     <span class="nd">@dog_api</span><span class="o">.</span><span class="n">marshal_list_with</span><span class="p">(</span><span class="n">dog</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -64,11 +72,27 @@
 <span class="nd">@dog_api</span><span class="o">.</span><span class="n">param</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;The dog identifier&quot;</span><span class="p">)</span>
 <span class="nd">@dog_api</span><span class="o">.</span><span class="n">response</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="s2">&quot;Dog not found&quot;</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">Dog</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;defines Dog GET by id endpoint&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;_summary_</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        Resource (class): flask-restx Resource class</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        response (class): Http response with list of dogs</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="Dog.get"><a class="viewcode-back" href="../../../backend/app.api.dog.html#app.api.dog.Dog.get">[docs]</a>    <span class="nd">@dog_api</span><span class="o">.</span><span class="n">doc</span><span class="p">(</span><span class="s2">&quot;get_dog&quot;</span><span class="p">)</span>
     <span class="nd">@dog_api</span><span class="o">.</span><span class="n">marshal_with</span><span class="p">(</span><span class="n">dog</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Fetch a dog given its identifier&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Fetch a dog given its identifier</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id (int): Dog unique identifier</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            response (class): Http response with filtered of dog</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">for</span> <span class="n">dog</span> <span class="ow">in</span> <span class="n">DOGS</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">dog</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">dog</span>
