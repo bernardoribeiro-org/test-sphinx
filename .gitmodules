@@ -1,0 +1,3 @@
+[submodule "docs-frontend"]
+	path = docs-frontend
+	url = git@github.com:paulogil2010/test-md.git
