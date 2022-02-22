@@ -19,7 +19,7 @@ DOGS = [
 
 @dog_api.route("/")
 class DogList(Resource):
-    """_summary_
+    """Dogs list method definition
 
     Args:
         Resource (class): flask-restx Resource class
@@ -39,7 +39,7 @@ class DogList(Resource):
 @dog_api.param("id", "The dog identifier")
 @dog_api.response(404, "Dog not found")
 class Dog(Resource):
-    """_summary_
+    """Dog get method definition
 
     Args:
         Resource (class): flask-restx Resource class
