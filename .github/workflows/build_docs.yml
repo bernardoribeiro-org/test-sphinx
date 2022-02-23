@@ -13,7 +13,7 @@ jobs:
     #     with:
     #       branch: gh-pages
     #       githubToken: ${{ secrets.DOC_TOKEN }} # Github Token
-
-    shell: bash
-      run: |
-        pwd
+    steps:
+      shell: bash
+        run: |
+          pwd
