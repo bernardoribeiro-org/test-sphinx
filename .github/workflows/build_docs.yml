@@ -14,6 +14,4 @@ jobs:
     #       branch: gh-pages
     #       githubToken: ${{ secrets.DOC_TOKEN }} # Github Token
     steps:
-      shell: bash
-        run: |
-          pwd
+      - run: pwd
