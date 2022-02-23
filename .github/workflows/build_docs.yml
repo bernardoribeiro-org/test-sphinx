@@ -6,10 +6,14 @@ jobs:
   updateBranch:
     name: Update staging branch
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - uses: Embraser01/update-git-branch-action@v1.0.0
-        if: github.ref == 'refs/heads/master'
-        with:
-          branch: gh-pages
-          githubToken: ${{ secrets.DOC_TOKEN }} # Github Token
+    # steps:
+    #   - uses: actions/checkout@master
+    #   - uses: Embraser01/update-git-branch-action@v1.0.0
+    #     if: github.ref == 'refs/heads/master'
+    #     with:
+    #       branch: gh-pages
+    #       githubToken: ${{ secrets.DOC_TOKEN }} # Github Token
+
+    shell: bash
+      run: |
+        pwd
