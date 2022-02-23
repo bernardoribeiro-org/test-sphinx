@@ -15,3 +15,4 @@ jobs:
     #       githubToken: ${{ secrets.DOC_TOKEN }} # Github Token
     steps:
       - run: pwd
+      - run: ls -lha
