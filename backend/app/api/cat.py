@@ -19,7 +19,14 @@ CATS = [
 
 @cat_api.route("/")
 class CatList(Resource):
-    """defines Cat list endpoint"""
+    """_summary_
+
+    Args:
+        Resource (class): RestX Resource class
+
+    Returns:
+        CATS (list): A list of cats
+    """
     @cat_api.doc("list_cats")
     @cat_api.marshal_list_with(cat)
     def get(self):
