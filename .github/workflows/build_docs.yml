@@ -7,9 +7,22 @@ jobs:
     name: Update staging branch
     runs-on: ubuntu-latest
     steps:
+<<<<<<< HEAD
       - uses: actions/checkout@master
       - uses: Embraser01/update-git-branch-action@v1.0.0
         if: github.ref == 'refs/heads/master'
         with:
           branch: gh-pages
           githubToken: ${{ secrets.DOC_TOKEN }} # Github Token
+=======
+      - uses: actions/checkout@v1
+      # Standard drop-in approach that should work for most people.
+      - uses: ammaraskar/sphinx-action@master
+        with:
+          docs-folder: "docs/"
+      # Example of using a custom build-command.
+      - uses: ammaraskar/sphinx-action@master
+        with:
+          build-command: "cd backend/docsrc/; make github"
+      # Grabbing custom dependencies and building as a pdf.
+>>>>>>> 2851d010460e67f14b2272076b050c44fa46c02f
