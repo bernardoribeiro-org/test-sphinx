@@ -72,6 +72,7 @@ jobs:
           echo "add"
           git add docs/ satanas
           git status
+          cat .git/config
           echo "COMMIT"
           echo "PUSH"
           git commit -m "docs add docs from GitHub Pages"
