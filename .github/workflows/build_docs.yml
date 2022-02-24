@@ -44,6 +44,7 @@ jobs:
         run: |
           echo "Trying to install packages"
           cd backend/
+          echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
           ls -lha
           python3 -m pip install backend/requirements-doc.txt
 
