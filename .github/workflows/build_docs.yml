@@ -42,15 +42,19 @@ jobs:
 
       - name: install packages
         run: echo "Trying to install packages"
-
+      - run: python --version
       - run: cd backend/
+      - run: |
+        pwd
+        ls -la
       - uses: BSFishy/pip-action@v1
         with:
           packages: package
           requirements: requirements-doc.txt
 
-      - run: cd docsrc/
       - run: echo "Trying to run make"
+      - run: echo "Trying to run make"
+      - run: |cd docsrc/
       - run: make github
       - run: cd ../../
       - run: cp -a backend/docsrc/html/* docs/
