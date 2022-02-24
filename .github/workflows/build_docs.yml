@@ -53,7 +53,7 @@ jobs:
 
       - run: echo "Trying to run make"
       - run: echo "Trying to run make"
-      - run: |cd docsrc/
+      - run: cd docsrc/
       - run: make github
       - run: cd ../../
       - run: cp -a backend/docsrc/html/* docs/
