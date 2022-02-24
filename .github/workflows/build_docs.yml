@@ -34,6 +34,12 @@ jobs:
 
       - name: Pull from master
         run: |
+          echo "Change to backend folder"
+          cd backend/
+          pwd
+          ls -lha
+          python3 -m pip install requirements-doc.txt
+
           echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
           echo "pull from master"
           git fetch --unshallow
@@ -42,11 +48,6 @@ jobs:
 
           echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
 
-          echo "Change to backend folder"
-          cd backend/
-          pwd
-          ls -lha
-          python3 -m pip install requirements-doc.txt
 
           echo "Change to docsrc folder"
           cd docsrc/
