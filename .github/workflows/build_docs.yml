@@ -58,10 +58,10 @@ jobs:
           pwd
           cp -a backend/docsrc/html/* docs/
           ls -l docs/
-					echo " SATANAS "
+          echo " SATANAS "
           ls ${{ github.workspace }}
-					git status
+          git status
           git add .
           git commit -m "add docs from GitHub Pages"
-					git push origin gh-pages
+          git push origin gh-pages
       - run: echo "🍏 This job's status is ${{ job.status }}."
