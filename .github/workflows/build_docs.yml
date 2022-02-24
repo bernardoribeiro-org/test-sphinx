@@ -41,11 +41,9 @@ jobs:
       - run: echo "Change to ${{ github.ref }} branch"
 
       - name: install packages
-        run: echo "Trying to install packages"
-      - uses: BSFishy/pip-action@v1
-        with:
-          packages: package
-          requirements: backend/requirements-doc.txt
+        run: |
+          echo "Trying to install packages"
+          python3 -m pip install backend/requirements-doc.txt
 
       - name: install packages
         run: |
