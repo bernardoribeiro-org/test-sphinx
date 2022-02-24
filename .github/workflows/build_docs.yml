@@ -64,6 +64,9 @@ jobs:
           ls -l docs/
           ls ${{ github.workspace }}
           git status
+					echo "CREATING SATANAS"
+          touch satanas
+					ls -lha
           echo "add"
           git add .
           echo "COMMIT"
