@@ -38,7 +38,7 @@ jobs:
           cd backend/
           pwd
           ls -lha
-          python3 -m pip install requirements-doc.txt
+          python3 -m pip install -r requirements-doc.txt
 
           echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
           echo "pull from master"
