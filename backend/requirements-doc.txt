@@ -1,4 +1,5 @@
--r requirements.txt
+# IT SHOULD BE RUNNED ON THE ROOT OF THE PROJECT
+-r backend/requirements.txt
 # documentation
 Sphinx==4.4.0
 furo==2022.1.2
