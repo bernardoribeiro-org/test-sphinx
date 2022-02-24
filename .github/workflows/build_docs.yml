@@ -66,9 +66,10 @@ jobs:
           git status
           echo "add"
           git add .
-          echo "commmit"
-          git commit -m "docs add docs from GitHub Pages"
+          echo "COMMIT"
           echo "PUSH"
+          git commit -m "docs add docs from GitHub Pages"
+          echo "PUSH 2"
           git push
           echo "SATAMAS"
       - run: echo "🍏 This job's status is ${{ job.status }}."
