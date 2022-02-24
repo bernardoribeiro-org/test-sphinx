@@ -34,34 +34,42 @@ jobs:
 
       - name: Pull from master
         run: |
+          echo "Change to backend folder"
+          cd backend/
+          pwd
+          ls -lha
+          python3 -m pip install -r requirements-doc.txt
+
+          echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+          echo "pull from master"
           git fetch --unshallow
           git checkout gh-pages
           git pull origin master
 
-      - run: echo "Change to ${{ github.ref }} branch"
-
-      - name: install packages
-        run: |
-          echo "Trying to install packages"
-          cd backend/
           echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-          ls -lha
-          python3 -m pip install backend/requirements-doc.txt
 
-      - name: install packages
-        run: |
-          echo "Trying to run make"
+          echo "Change to docsrc folder"
           cd docsrc/
           pwd
-          make github
+          ls -lha
+
           cd ../../
           pwd
-          cp -a backend/docsrc/html/. docs/
+          ls -lha backend/
+          ls -lha backend/docsrc/
+          ls -lha backend/docsrc/build/
+          ls -lha backend/docsrc/build/html
+          cp -a backend/docsrc/build/html/. docs/
+
           ls -l docs/
-          echo " SATANAS "
+
+      - name: List files in the repository
+        run: |
           ls ${{ github.workspace }}
-          git status
+
+      - name: Pushing to gh-pages
+        run: |
           git add .
-          git commit -m "add docs from GitHub Pages"
+          git commit -m "docs: add docs from GitHub Pages"
           git push origin gh-pages
       - run: echo "🍏 This job's status is ${{ job.status }}."
