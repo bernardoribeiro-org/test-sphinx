@@ -18,6 +18,8 @@ jobs:
 
       - name: perform merge
         run: |
+          git fetch
+          git fetch --prune
           git config --global user.email "${GITHUB_ACTOR}"
           git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
 
@@ -25,6 +27,7 @@ jobs:
           git status
 
           git checkout "gh-pages"
+          git pull origin gh-pages
           echo "The name of your branch is ${{ github.ref }} "
           git pull origin test
           git status
