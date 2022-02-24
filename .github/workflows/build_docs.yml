@@ -71,4 +71,5 @@ jobs:
         run: |
           git add .
           git commit -m "docs: add docs from GitHub Pages"
+          git push origin gh-pages
       - run: echo "🍏 This job's status is ${{ job.status }}."
