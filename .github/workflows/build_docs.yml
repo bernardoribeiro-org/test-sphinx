@@ -15,6 +15,8 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
+          ref: ${{ github.head_ref }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: config git
         run: |
@@ -30,14 +32,14 @@ jobs:
 
       - name: checking steps
         run: |
-          echo "The name of your branch is ${{ github.ref }} "
+          git branch --show-current
           git status
 
       - name: change to gh-pages
         run: |
           git checkout "gh-pages"
           git pull origin gh-pages
-          echo "The name of your branch is ${{ github.ref }} "
+          git branch --show-current
 
       - name: update from test
         run: |
@@ -51,7 +53,7 @@ jobs:
 
       - name: add commit and push
         run: |
-          echo "The name of your branch is ${{ github.ref }} "
+          git branch --show-current
 
           git add .
           git commit -m 'add file.txt'
