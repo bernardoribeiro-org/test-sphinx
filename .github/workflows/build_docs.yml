@@ -47,15 +47,16 @@ jobs:
           packages: package
           requirements: backend/requirements-doc.txt
 
-      - run: echo "Trying to run make"
-      - run: |
-        cd docsrc/
-        pwd
-        make github
-        cd ../../
-        pwd
-        cp -a backend/docsrc/html/* docs/
-        ls -l docs/
+      - name: install packages
+        run: |
+          echo "Trying to run make"
+          cd docsrc/
+          pwd
+          make github
+          cd ../../
+          pwd
+          cp -a backend/docsrc/html/* docs/
+          ls -l docs/
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
