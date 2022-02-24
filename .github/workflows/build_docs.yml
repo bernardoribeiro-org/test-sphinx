@@ -43,7 +43,7 @@ jobs:
       - name: install packages
         run: |
           echo "Trying to install packages"
-          ls -lha backend/requirements-doc.txt
+          ls -lha
           python3 -m pip install backend/requirements-doc.txt
 
       - name: install packages
