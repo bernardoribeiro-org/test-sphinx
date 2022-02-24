@@ -3,80 +3,23 @@ name: Update Sphinx
 on: [push]
 
 jobs:
-  updateBranch:
-    name: Update staging branch
+  build:
     runs-on: ubuntu-latest
-    # steps:
-    #   - uses: actions/checkout@master
-    #   - uses: Embraser01/update-git-branch-action@v1.0.0
-    #     if: github.ref == 'refs/heads/master'
-    #     with:
-    #       branch: gh-pages
-    #       githubToken: ${{ secrets.DOC_TOKEN }} # Github Token
     steps:
-      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - run: echo "there is a TOKEN -> ${{secrets.GITHUB_TOKEN}}"
-
-      - name: Check out repository code
-        uses: actions/checkout@v2
-        with:
-          token: ${{secrets.GITHUB_TOKEN}}
-
-      - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "The workflow is now ready to test your code on the runner."
-      - uses: actions/checkout@v2
-      - name: Set Git config
-        run: |
-          git config --local user.email "paulogil2010@github.com"
-          git config --local user.name "Paulo Lenz"
-
-      - name: Pull from master
-        run: |
-          echo "Change to backend folder"
-          cd backend/
-          pwd
-          ls -lha
-          python3 -m pip install -r requirements-doc.txt
-
-          echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-          echo "pull from master"
-
-          git fetch --prune
-          git checkout gh-pages
-          git pull origin gh-pages
-          git pull origin master
-
-          echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-
-          echo "Change to docsrc folder"
-          cd docsrc/
-          pwd
-          ls -lha
-
-          cd ../../
-          pwd
-          ls -lha backend/
-          ls -lha backend/docsrc/
-          ls -lha backend/docsrc/build/
-          ls -lha backend/docsrc/build/html
-          cp -a backend/docsrc/build/html/. docs/
-
-          ls -l docs/
-          ls ${{ github.workspace }}
-          echo "CREATING SATANAS"
-          touch satanas
-          git status
-          ls -lha
-          echo "add"
-          git add docs/ satanas
-          git status
-          cat .git/config
-          echo "COMMIT"
-          echo "PUSH"
-          git commit -m "docs add docs from GitHub Pages"
-          echo "PUSH 2"
-          git push
-          echo "SATAMAS"
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+        fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+    - name: Create local changes
+      run: |
+        touch Satan.txt
+    - name: Commit files
+      run: |
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git commit -m "Add changes" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
