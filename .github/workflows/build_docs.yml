@@ -59,7 +59,7 @@ jobs:
 					ls -lha backend/docsrc/
 					ls -lha backend/docsrc/build/
 					ls -lha backend/docsrc/build/html
-					cp -a backend/docsrc/build/html/* docs/
+					cp -a backend/docsrc/build/html/. docs/
 
           ls -l docs/
 
