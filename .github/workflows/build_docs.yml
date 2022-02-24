@@ -16,22 +16,42 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
-      - name: perform merge
+      - name: config git
         run: |
-          git fetch
-          git fetch --prune
           git config --global user.email "${GITHUB_ACTOR}"
           git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
 
+      - name: update branches
+        run: |
+          git fetch
+          git fetch --prune
+          git branch -a
+
+      - name: checking steps
+        run: |
           echo "The name of your branch is ${{ github.ref }} "
           git status
 
+      - name: change to gh-pages
+        run: |
           git checkout "gh-pages"
           git pull origin gh-pages
           echo "The name of your branch is ${{ github.ref }} "
+
+      - name: update from test
+        run: |
           git pull origin test
           git status
+
+      - name: Create file
+        run: |
           touch 'file.txt'
+          git status
+
+      - name: add commit and push
+        run: |
+          echo "The name of your branch is ${{ github.ref }} "
+
           git add .
           git commit -m 'add file.txt'
           git push
