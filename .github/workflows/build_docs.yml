@@ -14,14 +14,52 @@ jobs:
     #       branch: gh-pages
     #       githubToken: ${{ secrets.DOC_TOKEN }} # Github Token
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - run: echo "there is a TOKEN -> ${{secrets.DOC_TOKEN}}"
+
       - name: Check out repository code
         uses: actions/checkout@v2
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+        with:
+          token: ${{secrets.DOC_TOKEN}}
+
+      - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "The workflow is now ready to test your code on the runner."
+      - uses: actions/checkout@v2
+      - name: Set Git config
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "Github Actions"
+
+      - name: Pull from master
+        run: |
+          git fetch --unshallow
+          git checkout gh-pages
+          git pull origin master
+
+      - run: echo "Change to ${{ github.ref }} branch"
+
+      - name: install packages
+        run: echo "Trying to install packages"
+
+      - run: cd backend/
+      - uses: BSFishy/pip-action@v1
+        with:
+          packages: package
+          requirements: requirements-doc.txt
+
+      - run: cd docsrc/
+      - run: echo "Trying to run make"
+      - run: make github
+      - run: cd ../../
+      - run: cp -a backend/docsrc/html/* docs/
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+
+      - name: Pushing to gh-pages
+        run: |
+          git add .
+          git commit -m "docs: add docs from GitHub Pages"
       - run: echo "🍏 This job's status is ${{ job.status }}."
