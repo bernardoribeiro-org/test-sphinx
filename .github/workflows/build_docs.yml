@@ -1,14 +1,35 @@
 name: Update Sphinx
 
 on: push
+
+env:
+  DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+
 jobs:
-  updateBranch:
+  main:
+    name: Merge Main
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - uses: Embraser01/update-git-branch-action@v1.0.0
-        if: github.ref == 'refs/heads/master'
+      - name: git checkout
+        uses: actions/checkout@v2
         with:
-          branch: gh-pages
-          force: 1 # To push-force to the branch
-          githubToken: ${{ secrets.GITHUB_TOKEN }} # Github Token
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: perform merge
+        run: |
+          git config --global user.email "${GITHUB_ACTOR}"
+          git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
+
+          echo "The name of your branch is ${{ github.ref }} "
+          git status
+
+          git checkout "gh-pages"
+          echo "The name of your branch is ${{ github.ref }} "
+          git pull origin test
+          git status
+          touch 'file.txt'
+          git add .
+          git commit -m 'add file.txt'
+          git push
+          git status
