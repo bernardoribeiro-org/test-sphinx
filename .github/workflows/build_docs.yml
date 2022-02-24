@@ -56,7 +56,7 @@ jobs:
           make github
           cd ../../
           pwd
-          cp -a backend/docsrc/html/* docs/
+          cp -a backend/docsrc/html/. docs/
           ls -l docs/
           echo " SATANAS "
           ls ${{ github.workspace }}
