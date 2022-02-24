@@ -42,8 +42,10 @@ jobs:
 
           echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
           echo "pull from master"
-          git fetch --unshallow
+
+          git fetch --prune
           git checkout gh-pages
+          git pull origin gh-pages
           git pull origin master
 
           echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
@@ -63,12 +65,13 @@ jobs:
 
           ls -l docs/
           ls ${{ github.workspace }}
-          git status
           echo "CREATING SATANAS"
           touch satanas
+          git status
           ls -lha
           echo "add"
-          git add docs/
+          git add docs/ satanas
+          git status
           echo "COMMIT"
           echo "PUSH"
           git commit -m "docs add docs from GitHub Pages"
