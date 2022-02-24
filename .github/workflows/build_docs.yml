@@ -1,34 +1,16 @@
 name: Update Sphinx
 
-on: [push]
-
+on: push
+name: Update prod branch on release
 jobs:
-  build:
+  updateBranch:
+    name: Update gh-pages branch
     runs-on: ubuntu-latest
     steps:
-      - name: Update gh-pages from master
-        uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-          fetch-depth: 0
-      - uses: actions/checkout@master
-      - uses: Embraser01/update-git-branch-action@v1.0.0
-        if: github.ref == 'refs/heads/master'
-        with:
-          branch: gh-pages
-          force: 1 # To push-force to the branch
-          githubToken: ${{ secrets.GITHUB_TOKEN }} # Github Token
-      - name: Create local changes
-        run: |
-          echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-
-          cd backend/
-          python3 -m pip install -r requirements-doc.txt
-          cd docsrc/
-          cp -a backend/docsrc/build/html/. docs/
-
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages
+    - uses: actions/checkout@master
+    - uses: Embraser01/update-git-branch-action@v1.0.0
+      if: github.ref == 'refs/heads/master'
+      with:
+        branch: gh-pages
+        force: 1 # To push-force to the branch
+        githubToken: ${{ secrets.GITHUB_TOKEN }} # Github Token
