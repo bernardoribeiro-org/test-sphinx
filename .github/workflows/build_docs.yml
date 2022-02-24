@@ -53,10 +53,14 @@ jobs:
           pwd
           ls -lha
 
-          make github
           cd ../../
           pwd
-          cp -a backend/docsrc/html/* docs/
+          ls -lha backend/
+          ls -lha backend/docsrc/
+					ls -lha backend/docsrc/build/
+					ls -lha backend/docsrc/build/html
+					cp -a backend/docsrc/build/html/* docs/
+
           ls -l docs/
 
       - name: List files in the repository
