@@ -68,7 +68,7 @@ jobs:
           touch satanas
           ls -lha
           echo "add"
-          git add .
+          git add docs/
           echo "COMMIT"
           echo "PUSH"
           git commit -m "docs add docs from GitHub Pages"
