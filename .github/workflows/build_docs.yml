@@ -48,7 +48,6 @@ jobs:
 
           echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
 
-
           echo "Change to docsrc folder"
           cd docsrc/
           pwd
