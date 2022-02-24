@@ -64,7 +64,11 @@ jobs:
           ls -l docs/
           ls ${{ github.workspace }}
           git status
+          echo "add"
           git add .
+          echo "commmit"
           git commit -m "docs add docs from GitHub Pages"
+          echo "PUSH"
           git push origin gh-pages
+          echo "SATAMAS"
       - run: echo "🍏 This job's status is ${{ job.status }}."
