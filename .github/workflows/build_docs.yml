@@ -56,7 +56,7 @@ jobs:
           cd ../../
           pwd
           ls -lha backend/
-          ls -lha backend/docsrc/
+					ls -lha backend/docsrc/
 					ls -lha backend/docsrc/build/
 					ls -lha backend/docsrc/build/html
 					cp -a backend/docsrc/build/html/* docs/
