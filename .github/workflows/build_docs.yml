@@ -69,6 +69,6 @@ jobs:
           echo "commmit"
           git commit -m "docs add docs from GitHub Pages"
           echo "PUSH"
-          git push origin gh-pages
+          git push
           echo "SATAMAS"
       - run: echo "🍏 This job's status is ${{ job.status }}."
