@@ -1,9 +1,9 @@
 name: Update Sphinx
 
-on: push
+on: pull_request
 
-# env:
-#   DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+env:
+  DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
 #   GITHUB_TOKEN: ${{ secrets.DOC_TOKEN }}
 
 jobs:
@@ -41,15 +41,17 @@ jobs:
           git pull origin gh-pages
           git branch --show-current
 
-      - name: update from test
+      - name: update from ${{DEFAULT_BRANCH}}
         run: |
-          git pull origin test
+          git pull origin ${{DEFAULT_BRANCH}}
           git status
 
-      - name: Create file
+      - name: generates docs
         run: |
-          touch 'file2.txt'
-          git status
+          cd backend/
+          python3 -m pip install -r requirements-doc.txt
+          cd docsrc/
+          make github
 
       - name: Commit files
         run: |
