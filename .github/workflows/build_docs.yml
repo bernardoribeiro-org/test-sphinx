@@ -2,9 +2,9 @@ name: Update Sphinx
 
 on: push
 
-env:
-  DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
-  GITHUB_TOKEN: ${{ secrets.DOC_TOKEN }}
+# env:
+#   DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+#   GITHUB_TOKEN: ${{ secrets.DOC_TOKEN }}
 
 jobs:
   main:
@@ -20,8 +20,8 @@ jobs:
 
       - name: config git
         run: |
-          git config --global user.email "paulogil2010@gmail.com"
-          git config --global user.name "GitHub Actions"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           git config pull.rebase false
 
       - name: update branches
@@ -51,11 +51,12 @@ jobs:
           touch 'file.txt'
           git status
 
-      - name: add commit and push
+      - name: Commit files
         run: |
-          git branch --show-current
-
           git add .
-          git commit -m 'add file.txt'
-          git push
-          git status
+          git commit -m "Add changes" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
