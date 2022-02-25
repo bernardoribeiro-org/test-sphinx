@@ -1,15 +1,62 @@
 name: Update Sphinx
 
-on: [pull_request]
+on: push
+
+# env:
+#   DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+#   GITHUB_TOKEN: ${{ secrets.DOC_TOKEN }}
 
 jobs:
-  updateBranch:
-    name: Update staging branch
+  main:
+    name: Merge Main
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - uses: Embraser01/update-git-branch-action@v1.0.0
-        if: github.ref == 'refs/heads/master'
+      - name: git checkout
+        uses: actions/checkout@v2
         with:
+          persist-credentials: false
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+
+      - name: config git
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git config pull.rebase false
+
+      - name: update branches
+        run: |
+          git fetch
+          git fetch --prune
+          git branch -a
+
+      - name: checking steps
+        run: |
+          git branch --show-current
+          git status
+
+      - name: change to gh-pages
+        run: |
+          git checkout "gh-pages"
+          git pull origin gh-pages
+          git branch --show-current
+
+      - name: update from test
+        run: |
+          git pull origin test
+          git status
+
+      - name: Create file
+        run: |
+          touch 'file.txt'
+          git status
+
+      - name: Commit files
+        run: |
+          git add .
+          git commit -m "Add changes" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
-          githubToken: ${{ secrets.DOC_TOKEN }} # Github Token
