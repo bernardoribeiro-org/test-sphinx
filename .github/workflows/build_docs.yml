@@ -68,6 +68,8 @@ jobs:
 
       - name: Commit files
         run: |
+          ls -l
+          pwd
           cd ../../
           git add .
           git commit -m "Add changes" -a
