@@ -68,9 +68,7 @@ jobs:
 
       - name: Commit files
         run: |
-          ls -l
-          pwd
-          cd ../../
+          git status
           git add docs/
           git add backend/docsrc/
           git commit -m "Add changes" -a
