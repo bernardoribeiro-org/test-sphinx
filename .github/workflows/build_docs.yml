@@ -1,4 +1,4 @@
-name: Update Sphinx
+name: Sphinx Pages
 
 on: push
 # on: pull_request
