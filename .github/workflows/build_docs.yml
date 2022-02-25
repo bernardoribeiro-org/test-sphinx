@@ -42,7 +42,7 @@ jobs:
 
       - name: update from main
         run: |
-          git pull origin ${{DEFAULT_BRANCH}}
+          git pull origin "$DEFAULT_BRANCH"
           git status
 
       - name: generates docs
