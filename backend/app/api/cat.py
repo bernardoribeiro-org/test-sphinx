@@ -38,7 +38,14 @@ class CatList(Resource):
 @cat_api.param("id", "The cat identifier")
 @cat_api.response(404, "Cat not found")
 class Cat(Resource):
-    """defines Cat GET by id endpoint"""
+    """_summary_
+
+    Args:
+        Resource (class): RestX Resource class
+
+    Returns:
+        CATS (dict): A list of cats
+    """
     @cat_api.doc("get_cat")
     @cat_api.marshal_with(cat)
     def get(self, id):
