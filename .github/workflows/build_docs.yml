@@ -8,13 +8,12 @@ env:
 
 jobs:
   main:
-    name: Merge Main
+    name: Build gh-pages
     runs-on: ubuntu-latest
     steps:
       - name: git checkout
         uses: actions/checkout@v2
         with:
-          persist-credentials: false
           fetch-depth: 0
           ref: ${{ github.head_ref }}
 
@@ -23,21 +22,12 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git config pull.rebase false
-          git remote -v
 
       - name: check git
-        run: git remote show origin -n
-
-      - name: update branches
         run: |
+          git remote show origin -n
           git fetch
           git fetch --prune
-          git branch -a
-
-      - name: checking steps
-        run: |
-          git branch --show-current
-          git status
 
       - name: change to gh-pages
         run: |
@@ -53,7 +43,7 @@ jobs:
       - name: generates docs
         run: |
           cd backend/
-          python3 -m pip install -r requirements-doc.txt
+          pip install -r requirements-doc.txt
           cd docsrc/
           sphinx-apidoc \
             --separate \
@@ -68,8 +58,10 @@ jobs:
             --ext-ifconfig \
             --ext-viewcode \
             --ext-githubpages \
-            -o source/backend .. ../../backend
-
+            -o source/backend .. ../../backend \
+              ../*/migrations \
+              ../*/tests
+          make clean
           make github
 
       - name: Commit files
