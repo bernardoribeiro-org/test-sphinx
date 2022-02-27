@@ -40,14 +40,15 @@ help:
 
 clean:
 	-rm -rf $(BUILDDIR)/*
+	-rm -rf docs/backend/*
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
-github: html
-	@cp -a $(BUILDDIR)/html/. ../../docs/
+github: clean html
+	@cp -a $(BUILDDIR)/html/. ../../docs/backend
 
 dirhtml:
 	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml
