@@ -1,69 +1,78 @@
 name: Update Sphinx
 
-on: [push]
+on: push
+# on: pull_request
+
+env:
+  DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
 
 jobs:
-  updateBranch:
-    name: Update staging branch
+  main:
+    name: Merge Main
     runs-on: ubuntu-latest
-    # steps:
-    #   - uses: actions/checkout@master
-    #   - uses: Embraser01/update-git-branch-action@v1.0.0
-    #     if: github.ref == 'refs/heads/master'
-    #     with:
-    #       branch: gh-pages
-    #       githubToken: ${{ secrets.DOC_TOKEN }} # Github Token
     steps:
-      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - run: echo "there is a TOKEN -> ${{secrets.GITHUB_TOKEN}}"
-
-      - name: Check out repository code
+      - name: git checkout
         uses: actions/checkout@v2
         with:
-          token: ${{secrets.GITHUB_TOKEN}}
+          persist-credentials: false
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
 
-      - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "The workflow is now ready to test your code on the runner."
-      - uses: actions/checkout@v2
-      - name: Set Git config
+      - name: config git
         run: |
-          git config --local user.email "paulogil2010@github.com"
-          git config --local user.name "Paulo Lenz"
+          git config --local user.email "paulogil2010@gmail.com"
+          git config --local user.name "GitHub Actions"
+          git config pull.rebase false
 
-      - name: Pull from master
+      - name: update branches
         run: |
-          git fetch --unshallow
-          git checkout gh-pages
-          git pull origin master
+          git fetch
+          git fetch --prune
+          git branch -a
 
-      - run: echo "Change to ${{ github.ref }} branch"
-
-      - name: install packages
+      - name: checking steps
         run: |
-          echo "Trying to install packages"
+          git branch --show-current
+          git status
+
+      - name: change to gh-pages
+        run: |
+          git checkout "gh-pages"
+          git pull origin gh-pages
+          git branch --show-current
+
+      - name: update from main
+        run: |
+          git pull origin "$DEFAULT_BRANCH"
+          git status
+
+      - name: generates docs
+        run: |
           cd backend/
-          echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-          ls -lha
-          python3 -m pip install backend/requirements-doc.txt
-
-      - name: install packages
-        run: |
-          echo "Trying to run make"
+          python3 -m pip install -r requirements-doc.txt
           cd docsrc/
-          pwd
-          make github
-          cd ../../
-          pwd
-          cp -a backend/docsrc/html/* docs/
-          ls -l docs/
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
+          sphinx-apidoc \
+            --separate \
+            --force \
+            --ext-autodoc \
+            --ext-doctest \
+            --ext-intersphinx \
+            --ext-todo \
+            --ext-coverage \
+            --ext-imgmath \
+            --ext-mathjax \
+            --ext-ifconfig \
+            --ext-viewcode \
+            --ext-githubpages \
+            -o source/backend .. ../../backend
 
-      - name: Pushing to gh-pages
+      - name: Commit files
         run: |
+          date > gh-action.log
           git add .
-          git commit -m "docs: add docs from GitHub Pages"
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+          git commit -m "Add changes" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages

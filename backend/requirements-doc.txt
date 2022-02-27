@@ -1,3 +1,4 @@
+# IT SHOULD BE RUNNED ON THE ROOT OF THE PROJECT
 -r requirements.txt
 # documentation
 Sphinx==4.4.0
